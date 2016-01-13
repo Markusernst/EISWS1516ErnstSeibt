@@ -1,0 +1,14 @@
+{
+  "name": "eis",
+  "version": "1.0.0",
+  "description": "A EIS PROJECT",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Markus Ernst, Roman Seibt",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
