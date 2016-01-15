@@ -5,23 +5,32 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
 
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/TFaddress" />
+        <EditText
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/TFaddress" />
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
             android:text="Search"
             android:id="@+id/Search"
-            android:layout_gravity="right"
             android:onClick="onSearch"
+            android:nestedScrollingEnabled="true" />
+
+        <Button
+
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/Smartpark"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="SmartPark"
+            android:onClick="onClick"
             android:nestedScrollingEnabled="true" />
     </LinearLayout>
 
