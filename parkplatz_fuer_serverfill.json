@@ -8,51 +8,114 @@
       "tendenz": "1"
 }
 
+{
+      "addresse": "Kalker Hauptstrasse 55",
+      "typ": "parkhaus",
+      "kapazitaet": "1415",
+      "belegung":"653",
+      "geometry": { "latitude" : 50.938166752726, 
+      				"longitude" : 6.9975859581216 },
+      "tendenz": "0"
+}
+{
+      "addresse": "Breslauer Platz 2",
+      "typ": "parkhaus",
+      "kapazitaet": "94",
+      "belegung":"93",
+      "geometry": { "latitude" : 50.943542803025, 
+      				"longitude" : 6.9600578042555 },
+      "tendenz": "0"
+}
+{
+      "addresse": "Alstadt Nord",
+      "typ": "parkhaus",
+      "kapazitaet": "150",
+      "belegung":"130",
+      "geometry": { "latitude" : 50.940296947302, 
+      				"longitude" : 6.9596401529264 },
+      "tendenz": "-1"
+}
+{
+      "addresse": "Brueckenstrasse 13",
+      "typ": "parkhaus",
+      "kapazitaet": "268",
+      "belegung":"126",
+      "geometry": { "latitude" : 50.937442390459, 
+      				"longitude" : 6.9551466076444 },
+      "tendenz": "1"
+}
+{
+      "addresse": "Hohe Strasse 30",
+      "typ": "parkhaus",
+      "kapazitaet": "121",
+      "belegung":"12",
+      "geometry": { "latitude" : 50.935551960218, 
+      				"longitude" : 6.9566578441203 },
+      "tendenz": "1"
+}
+{
+      "addresse": "Maastrichter Strasse 8",
+      "typ": "parkhaus",
+      "kapazitaet": "277",
+      "belegung":"200",
+      "geometry": { "latitude" :50.938607752577, 
+      				"longitude" :6.9379774149327 },
+      "tendenz": "1"
+}
+{
+      "addresse": "Spiesergasse 14",
+      "typ": "parkhaus",
+      "kapazitaet": "50",
+      "belegung":"10",
+      "geometry": { "latitude" : 50.942080034931, 
+      				"longitude" : 6.9441022344973 },
+      "tendenz": "-1"
+}
+{
+      "addresse": "Caecilienstrasse 31",
+      "typ": "parkhaus",
+      "kapazitaet": "52",
+      "belegung":"2",
+      "geometry": { "latitude" : 50.934957676108, 
+      				"longitude" : 6.9513660308025 },
+      "tendenz": "-1"
+}
+{
+      "addresse": "An Sankt Agatha 31",
+      "typ": "parkhaus",
+      "kapazitaet": "285",
+      "belegung":"285",
+      "geometry": { "latitude" : 50.935512130649, 
+      				"longitude" : 6.9549356486054 },
+      "tendenz": "-1"
+}
 
+{
+      "addresse": "Marspfortengasse 10",
+      "typ": "parkhaus",
+      "kapazitaet": "197",
+      "belegung":"197",
+      "geometry": { "latitude" : 50.938818312834, 
+      				"longitude" : 6.956969425138 },
+      "tendenz": "0"
+}
 
-	{"attributes":{"IDENTIFIER":"D_P006","PARKHAUS":"K\u00f6ln Arcaden","KAPAZITAET":1415,"TENDENZ":0},
-	"geometry":{"x":6.9975859581216,"y":50.938166752726}},
-	{"attributes":{"IDENTIFIER":"PH01","PARKHAUS":"Hauptbahnhof","KAPAZITAET":94,"TENDENZ":0},
-	"geometry":{"x":6.9600578042555,"y":50.943542803025}},
-	{"attributes":{"IDENTIFIER":"PH02","PARKHAUS":"Am Dom","KAPAZITAET":-1,"TENDENZ":-1},
-	"geometry":{"x":6.9596401529264,"y":50.940296947302}},
-	{"attributes":{"IDENTIFIER":"PH03","PARKHAUS":"Gro\u00df Sankt Martin","KAPAZITAET":-1,"TENDENZ":-1},
-	"geometry":{"x":6.9604378349552,"y":50.939874377019}},
-	{"attributes":{"IDENTIFIER":"PH04","PARKHAUS":"Br\u00fcckenstra\u00dfe","KAPAZITAET":268,"TENDENZ":0},
-	"geometry":{"x":6.9551466076444,"y":50.937442390459}},
-	{"attributes":{"IDENTIFIER":"PH05","PARKHAUS":"REWE","KAPAZITAET":121,"TENDENZ":1},
-	"geometry":{"x":6.9566578441203,"y":50.935551960218}},
-	{"attributes":{"IDENTIFIER":"PH06","PARKHAUS":"Maastrichter Stra\u00dfe","KAPAZITAET":277,"TENDENZ":0},
-	"geometry":{"x":6.9379774149327,"y":50.938607752577}},
-	{"attributes":{"IDENTIFIER":"PH07","PARKHAUS":"Im Klapperhof","KAPAZITAET":-1,"TENDENZ":-1},
-	"geometry":{"x":6.9441022344973,"y":50.942080034931}},
-	{"attributes":{"IDENTIFIER":"PH08","PARKHAUS":null,"KAPAZITAET":-1,"TENDENZ":-1},
-	"geometry":{"x":6.9446990634422,"y":50.944858425405}},
-	{"attributes":{"IDENTIFIER":"PH09","PARKHAUS":"Philharmonie","KAPAZITAET":-1,"TENDENZ":-1},
-	"geometry":{"x":6.9614107905593,"y":50.94045491275}},
-	{"attributes":{"IDENTIFIER":"PH10","PARKHAUS":"C\u00e4cilienstra\u00dfe","KAPAZITAET":52,"TENDENZ":1},
-	"geometry":{"x":6.9513660308025,"y":50.934957676108}},
-	{"attributes":{"IDENTIFIER":"PH11","PARKHAUS":"Kaufhof","KAPAZITAET":285,"TENDENZ":0},
-	"geometry":{"x":6.9549356486054,"y":50.935512130649}},
-	{"attributes":{"IDENTIFIER":"PH12","PARKHAUS":"Hohe Stra\u00dfe","KAPAZITAET":197,"TENDENZ":0},
-	"geometry":{"x":6.956969425138,"y":50.938818312834}},
-	{"attributes":{"IDENTIFIER":"PH14","PARKHAUS":"Theater-Parkhaus","KAPAZITAET":134,"TENDENZ":2},
-	"geometry":{"x":6.9498329945035,"y":50.937197858712}},
-	{"attributes":{"IDENTIFIER":"PH15","PARKHAUS":"Opernpassagen","KAPAZITAET":59,"TENDENZ":0},
-	"geometry":{"x":6.9522635836521,"y":50.938733300316}},
-	{"attributes":{"IDENTIFIER":"PH16","PARKHAUS":"Maritim","KAPAZITAET":0,"TENDENZ":0},
-	"geometry":{"x":6.9621927826298,"y":50.935596347032}},
-	{"attributes":{"IDENTIFIER":"PH17","PARKHAUS":"Am Neumarkt","KAPAZITAET":159,"TENDENZ":0},
-	"geometry":{"x":6.9473120739802,"y":50.934765495969}},
-	{"attributes":{"IDENTIFIER":"PH18","PARKHAUS":"Alte Wallgasse","KAPAZITAET":1,"TENDENZ":2},
-	"geometry":{"x":6.9424662360469,"y":50.939834935292}},
-	{"attributes":{"IDENTIFIER":"PH19","PARKHAUS":"G\u00fcrzenich","KAPAZITAET":111,"TENDENZ":2},
-	"geometry":{"x":6.9578148706143,"y":50.936952549686}},
-	{"attributes":{"IDENTIFIER":"PH20","PARKHAUS":"Karstadt","KAPAZITAET":220,"TENDENZ":0},
-	"geometry":{"x":6.947996599381,"y":50.938492996844}},
-	{"attributes":{"IDENTIFIER":"PH21","PARKHAUS":"Kreissparkasse","KAPAZITAET":0,"TENDENZ":0},
-	"geometry":{"x":6.9473746821028,"y":50.937201399995}},
-	{"attributes":{"IDENTIFIER":"PH22","PARKHAUS":"Heumarkt","KAPAZITAET":0,"TENDENZ":0},
-	"geometry":{"x":6.9616086266323,"y":50.93645868636}},
-	{"attributes":{"IDENTIFIER":"PH23","PARKHAUS":"Lungengasse","KAPAZITAET":56,"TENDENZ":2},
-	"geometry":{"x":6.9461361818041,"y":50.934757891277}},
+{
+      "addresse": "Krebsgasse 1",
+      "typ": "parkhaus",
+      "kapazitaet": "134",
+      "belegung":"2",
+      "geometry": { "latitude" : 50.937197858712, 
+      				"longitude" : 6.9498329945035 },
+      "tendenz": "1"
+}
+
+{
+      "addresse": "Schwertnergasse 1",
+      "typ": "parkhaus",
+      "kapazitaet": "59",
+      "belegung":"15",
+      "geometry": { "latitude" : 50.938733300316, 
+      				"longitude" : 6.9522635836521},
+      "tendenz": "1"
+}
