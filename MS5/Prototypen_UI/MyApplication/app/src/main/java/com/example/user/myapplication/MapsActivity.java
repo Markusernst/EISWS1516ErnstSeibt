@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Double lat;
     public Double lng;
     public String addresse;
-
+    public String searchAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,10 +78,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onSearch(View view) throws JSONException {
 
         EditText location_tf = (EditText)findViewById(R.id.TFaddress);
-        String location = location_tf.getText().toString();
+        searchAddress = location_tf.getText().toString();
 
-        String id = location;
-        String url = "http://192.168.43.158:8888/parking/" + id;
+        String url = "http://192.168.43.158:8888/parking/";
         try {
             Call get = okHttp.doGetRequest(url, new Callback() {
                 @Override
@@ -91,32 +90,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onResponse(Response response) throws IOException {
                     resp = response.body().string();
-                    System.out.println(resp);
+                    //System.out.println(resp);
                     try {
                         JSONObject jsonObject = new JSONObject(resp);
-                        addresse = jsonObject.getString("addresse");
-                        System.out.println("Addresse: " + addresse);
-                        JSONObject geoData = jsonObject.getJSONObject("geometry");
-                        lat = geoData.getDouble("latitude");
-                        lng = geoData.getDouble("longitude");
-                        System.out.println("latitude: " + lat + "longitude: " + lng);
+                        JSONArray jsonArray = jsonObject.getJSONArray("parking");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject obj = jsonArray.getJSONObject(i);
+                        System.out.println(obj);
+                        String tmpString =  obj.getString("addresse");
+                        //System.out.println(searchAddress);
+                        //System.out.println(tmpString);
+                            if(tmpString.equals(searchAddress)){
+                                addresse = tmpString;
+                                JSONObject geoData = obj.getJSONObject("geometry");
+                                lat = geoData.getDouble("latitude");
+                                lng = geoData.getDouble("longitude");
+                                //System.out.println("latitude: " + lat + "longitude: " + lng);
+                            }
+
+                        }
+
                         runThread();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-            }
-
-            );
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        /*LatLng latLng = new LatLng(lat,lng);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Addresse:" + addresse));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));*/
     }
 
     private void runThread(){
