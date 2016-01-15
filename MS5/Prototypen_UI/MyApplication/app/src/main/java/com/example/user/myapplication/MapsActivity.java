@@ -35,11 +35,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     OkHttp okHttp = new OkHttp();
-    String resp;
-    Object respon;
-    Double lat;
-    Double lng;
-    String addresse;
+    public String resp;
+    public Double lat;
+    public Double lng;
+    public String addresse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Deutschland and move the camera
         LatLng deutschland = new LatLng(50.93645868636, 6.9616086266323);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(deutschland));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
 
     protected void onResume() {
@@ -95,39 +95,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     try {
                         JSONObject jsonObject = new JSONObject(resp);
                         addresse = jsonObject.getString("addresse");
-                        System.out.println("Addresse" + addresse);
+                        System.out.println("Addresse: " + addresse);
                         JSONObject geoData = jsonObject.getJSONObject("geometry");
                         lat = geoData.getDouble("latitude");
                         lng = geoData.getDouble("longitude");
-                        System.out.println("latitude" + lat + "longitude" + lng);
+                        System.out.println("latitude: " + lat + "longitude: " + lng);
+                        runThread();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-            });
+            }
+
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        LatLng latLng = new LatLng(lat,lng);
+        /*LatLng latLng = new LatLng(lat,lng);
         mMap.addMarker(new MarkerOptions().position(latLng).title("Addresse:" + addresse));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-       /* List<Address> addressList = null;
-        if(location != null || !location.equals("")){
-            Geocoder geocoder = new Geocoder(this);
-            try {
-                addressList = geocoder.getFromLocationName(location , 1);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Address address = addressList.get(0);*/
-
-
-
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));*/
     }
+
+    private void runThread(){
+        runOnUiThread(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                LatLng latLng = new LatLng(lat,lng);
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Addresse: " + addresse));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        }
+    }));
+    }
+
 
 
     private void setUpMapIfNeeded() {
@@ -142,9 +144,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(50.938736474695, 6.9802124254481)).title("LANXESS arena 2"));
         mMap.setMyLocationEnabled(true);
-
+        LatLng deutschland = new LatLng(50.93645868636, 6.9616086266323);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(deutschland));
 
         /*
         Location location = new Location();
