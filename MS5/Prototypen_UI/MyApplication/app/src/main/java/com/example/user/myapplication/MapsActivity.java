@@ -15,13 +15,31 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    OkHttp okHttp = new OkHttp();
+    String resp;
+    Object respon;
+    Double lat;
+    Double lng;
+    String addresse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +75,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setUpMapIfNeeded();
     }
 
-    public void onSearch(View view) {
+    public void onSearch(View view) throws JSONException {
+
         EditText location_tf = (EditText)findViewById(R.id.TFaddress);
         String location = location_tf.getText().toString();
-        List<Address> addressList = null;
+
+        String id = location;
+        String url = "http://192.168.43.158:8888/parking/" + id;
+        try {
+            Call get = okHttp.doGetRequest(url, new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    resp = response.body().string();
+                    System.out.println(resp);
+                    try {
+                        JSONObject jsonObject = new JSONObject(resp);
+                        addresse = jsonObject.getString("addresse");
+                        System.out.println("Addresse" + addresse);
+                        JSONObject geoData = jsonObject.getJSONObject("geometry");
+                        lat = geoData.getDouble("latitude");
+                        lng = geoData.getDouble("longitude");
+                        System.out.println("latitude" + lat + "longitude" + lng);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        LatLng latLng = new LatLng(lat,lng);
+        mMap.addMarker(new MarkerOptions().position(latLng).title("Addresse:" + addresse));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+       /* List<Address> addressList = null;
         if(location != null || !location.equals("")){
             Geocoder geocoder = new Geocoder(this);
             try {
@@ -70,14 +123,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 e.printStackTrace();
             }
 
-            Address address = addressList.get(0);
-            LatLng latLng = new LatLng(address.getLatitude() , address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        }
+            Address address = addressList.get(0);*/
+
+
+
     }
-
-
 
 
     private void setUpMapIfNeeded() {
@@ -92,10 +142,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(50.938961923069, 6.9833329548588)).title("LANXESS arena 1"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(50.93645868636, 6.9616086266323)).title("Heumarkt"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(50.941262583518, 6.9408824051627)).title("Gerling Ring Karree"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(50.939818401849, 6.8841564926459)).title("Stadion P1"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(50.938736474695, 6.9802124254481)).title("LANXESS arena 2"));
         mMap.setMyLocationEnabled(true);
 
