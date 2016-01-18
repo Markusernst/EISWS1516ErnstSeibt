@@ -1,5 +1,6 @@
 package com.example.user.myapplication;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,20 +25,28 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+
+
     private GoogleMap mMap;
     OkHttp okHttp = new OkHttp();
-    String url = "http://192.168.43.158:8888/parking/";
+    String url;
     LatLng latLng;
     public String resp;
     public Double lat;
     public Double lng;
+
     public String addresse;
     public String searchAddress;
+
+
     List<LatLng> markerSmartpark = new ArrayList<LatLng>();
     List<String> addressSmartpark = new ArrayList<String>();
+
+
     List<LatLng> markerSart = new ArrayList<LatLng>();
     List<String> addressStart = new ArrayList<String>();
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -46,9 +55,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //Getting Ip from Start Activity
+        String ip = getIntent().getExtras().getString("IP", "defaultKey");
+        //192.168.43.158
+        url = "http://"+ip+":8888/parking/";
         setupParkButton();
 
         try {
+            // HTTP Get on Parking Ressource
             Call get = okHttp.doGetRequest(url, new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
@@ -57,11 +71,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onResponse(Response response) throws IOException {
                     resp = response.body().string();
-                    System.out.println(resp);
                     try {
                         JSONObject jsonObject = new JSONObject(resp);
                         JSONArray jsonArray = jsonObject.getJSONArray("parking");
-                        System.out.println(jsonArray);
+                        //iterate through all Parkings
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
                             addresse = obj.getString("addresse");
@@ -72,7 +85,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             markerSart.add(new LatLng(lat, lng));
                             addressStart.add(addresse);
                         }
+                        //run Set Markers in Main thread
                         runStartThread();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -84,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    //Start setting Markers in main thread
     private void runStartThread() {
         runOnUiThread(new Thread(new Runnable() {
             @Override
@@ -94,11 +110,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }));
     }
 
+    //Smartpark Button
     private void setupParkButton() {
 
         Button parkButton = (Button) findViewById(R.id.Smartpark);
         parkButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //clear the map from buttons
                 mMap.clear();
 
                 try {
@@ -110,21 +129,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         @Override
                         public void onResponse(Response response) throws IOException {
                             resp = response.body().string();
-                            System.out.println(resp);
                             try {
                                 JSONObject jsonObject = new JSONObject(resp);
                                 JSONArray jsonArray = jsonObject.getJSONArray("parking");
-                                System.out.println(jsonArray);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject obj = jsonArray.getJSONObject(i);
                                     Double tmpBelegung = obj.getDouble("belegung");
                                     Double tmpKapazitaet = obj.getDouble("kapazitaet");
-                                    System.out.println(tmpBelegung);
-                                    System.out.println(tmpKapazitaet);
+
+                                    //calculate open space on parkplaces
                                     Double auslastung = tmpBelegung / tmpKapazitaet * 100;
-                                    System.out.println(auslastung);
                                     Double auslastungsGrenze = 80.0;
-                                    System.out.println(i);
                                     if (auslastung <= auslastungsGrenze) {
                                         addresse = obj.getString("addresse");
                                         System.out.println(addresse);
@@ -137,7 +152,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     }
 
                                 }
-
+                                //run thread to set markers in main
                                 runParkThread();
 
                             } catch (JSONException e) {
@@ -152,7 +167,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-   private void runParkThread() {
+    //set markers in main thread
+    private void runParkThread() {
         runOnUiThread(new Thread(new Runnable() {
             @Override
             public void run() {
@@ -187,11 +203,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setUpMapIfNeeded();
     }
 
+    //set markers with search for address
     public void onSearch(View view) throws JSONException {
         mMap.clear();
+
+        //getting text from input
         EditText location_tf = (EditText)findViewById(R.id.TFaddress);
         searchAddress = location_tf.getText().toString();
         try {
+
+            //HTTP get for parkings
             Call get = okHttp.doGetRequest(url, new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
@@ -200,23 +221,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onResponse(Response response) throws IOException {
                     resp = response.body().string();
-                    System.out.println(resp);
                     try {
                         JSONObject jsonObject = new JSONObject(resp);
                         JSONArray jsonArray = jsonObject.getJSONArray("parking");
-                        System.out.println(jsonArray);
+                        //iterate through all parking places
                         for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = jsonArray.getJSONObject(i);
-                        System.out.println(obj);
                         String tmpString =  obj.getString("addresse");
-                        System.out.println(searchAddress);
-                        System.out.println(tmpString);
+
+                            //compare search-input with addresses
                             if(tmpString.equals(searchAddress)){
                                 addresse = tmpString;
                                 JSONObject geoData = obj.getJSONObject("geometry");
                                 lat = geoData.getDouble("latitude");
                                 lng = geoData.getDouble("longitude");
-                                System.out.println("latitude: " + lat + "longitude: " + lng);
                             }
 
                         }
